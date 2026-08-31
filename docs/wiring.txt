@@ -1,0 +1,15 @@
+ESP8266 MUSIC-REACTIVE WIRING (NodeMCU v2)
+==========================================
+MAX4466 OUT  -> A0
+MAX4466 VCC  -> 3V3
+MAX4466 GND  -> GND
+WS2812B DIN  -> D4 (GPIO2) via 330R series
+WS2812B 5V   -> 5V (external >=2A for >15 LEDs, common GND)
+WS2812B GND  -> GND
+1000uF cap across strip 5V/GND
+
+Pin notes:
+- D4/GPIO2 is also the boot strapping pin - keep LED strip data idle-low
+  at boot (FastLED handles this; avoid pull-ups on D4)
+- A0 range on ESP8266 is 0-1V internal (NodeMCU has divider) - MAX4466
+  output is DC-biased ~1.25V at 3V3 supply, sits safely in range
