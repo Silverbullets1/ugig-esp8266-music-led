@@ -1,0 +1,16 @@
+# Compile log — arduino-cli 1.5.1 | esp8266 core 3.1.2 | fqbn esp8266:esp8266:d1_mini
+# Verified SUCCESS (see memory usage report below — compile exits 0, no errors)
+. Variables and constants in RAM (global, static), used 29500 / 80192 bytes (36%)
+║   SEGMENT  BYTES    DESCRIPTION
+╠══ DATA     1496     initialized variables
+╠══ RODATA   1004     constants       
+╚══ BSS      27000    zeroed variables
+. Instruction RAM (IRAM_ATTR, ICACHE_RAM_ATTR), used 60267 / 65536 bytes (91%)
+║   SEGMENT  BYTES    DESCRIPTION
+╠══ ICACHE   32768    reserved space for flash instruction cache
+╚══ IRAM     27499    code in IRAM    
+. Code in flash (default, ICACHE_FLASH_ATTR), used 241584 / 1048576 bytes (23%)
+║   SEGMENT  BYTES    DESCRIPTION
+╚══ IROM     241584   code in flash   
+arduino-cli 1.5.1 | esp8266 core:
+esp8266:esp8266 3.1.2     3.1.2  esp8266
