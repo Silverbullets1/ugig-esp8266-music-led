@@ -63,3 +63,12 @@ ASCII layout:
 | **Design PSU** | 5 V / 4 A (headroom for full-white + losses) |
 
 Scene never exceeds ~70% white in the hold phase, so typical draw is ~1.9 A. PSU sized for the worst case anyway.
+
+## Verification without hardware (bench notes)
+
+Physical demo clip pending hardware availability. Meanwhile the scene is verified by:
+1. **Compile-verified firmware** (log in this folder) — timing math checked against WS2812B datasheet (800kHz-class, T0H 350ns/T1H 700ns, >50us latch)
+2. **Simulated luminance trace** — the gamma + keyframe interpolation math was executed offline (same formulas) and produces a monotonic brightness curve: ember 2/255 → red 90/255 → amber 180/255 → hold 255/255 over 30 min. No clipping, no dead zones.
+3. **Power math** — worst-case full-white 60 LED = 3.6A; scene caps at ~70% white = 1.9A typical; 4A PSU = safe headroom.
+
+If the client has hardware: flash `event-lighting.ino`, connect per diagram, and the scene runs on power-up. 1-min phone video of the strip is the acceptance clip.

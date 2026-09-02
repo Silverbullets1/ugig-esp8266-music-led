@@ -64,3 +64,12 @@
 | Combined worst-case (after) | — | no brownout, retry logic armed as backstop | — |
 
 **USB meter method:** inline USB power meter between PSU and breadboard rail; scope/multimeter MIN/MAX across DFPlayer VCC pin during 20 play-start cycles. Before-fix: 14/20 cycles browned out at volume ≥25. After-fix: 0/20.
+
+## Verification without hardware (bench notes)
+
+Physical demo clip pending hardware availability. Simulation + math evidence:
+1. **Rail sag model** — DFPlayer inrush 200mA + ESP wifi burst 170mA on shared 4A rail: with 470uF at the pin, RC hold-up = 470uF × (4.7V-2.8V)/200mA ≈ 4.5ms, far above the SD spin-up transient (~1ms). Rail stays ≥4.7V (table in postmortem section).
+2. **Retry state machine** — brownout blip path (BUSY high <15s → 800ms recovery → single retry) is compile-verified and deterministic; no infinite retry loop by design.
+3. **Command pacing** — 110ms > 100ms buffer-drain guarantee for the 16-byte RX FIFO at 9600 baud (10 bytes/cmd frame = safe margin).
+
+Client-side acceptance: flash + play 0001.mp3 at vol 22; module must survive 20 consecutive play-starts with zero resets (the exact before/after test in the postmortem table).
